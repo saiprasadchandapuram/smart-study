@@ -1,0 +1,47 @@
+<!-- templates/history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat History | SmartStudy</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 1rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .chat-log {
+      background-color: #1e1e1e;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 8px rgba(255,255,255,0.05);
+    }
+    .chat-log p {
+      margin: 0.5rem 0;
+    }
+    .timestamp {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>Your Chat History</h2>
+  {% for chat in chats %}
+    <div class="chat-log">
+      <p><strong>You:</strong> {{ chat.question }}</p>
+      <p><strong>AI:</strong> {{ chat.answer }}</p>
+      <div class="timestamp">{{ chat.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+    </div>
+  {% endfor %}
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SmartStudy Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d0d;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+      filter: brightness(90%);
+    }
+    .header h1 {
+      margin: 0;
+      color: #ffffff;
+    }
+    .header p {
+      color: #bbbbbb;
+      margin-top: 5px;
+    }
+    .chat-box {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+    .message {
+      margin: 10px 0;
+    }
+    .user {
+      text-align: right;
+      color: #4aa8ff;
+    }
+    .ai {
+      text-align: left;
+      background-color: #111;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 90%;
+    }
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+    }
+    button {
+      padding: 12px 20px;
+      background-color: #4aa8ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #1c6bb8;
+    }
+    @media (max-width: 600px) {
+      .chat-box {
+        height: 300px;
+      }
+      input[type="text"], button {
+        font-size: 14px;
+      }
+      .header img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="SmartStudy Logo" />
+      <h1>SmartStudy</h1>
+      <p>Your premium AI-powered study companion.</p>
+    </div>
+
+    <div class="chat-box" id="messages"></div>
+
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Type your question..." />
+      <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById('user-input');
+      const message = input.value.trim();
+      const messagesDiv = document.getElementById('messages');
+
+      if (!message) return;
+
+      messagesDiv.innerHTML += `<div class="message user"><strong>You:</strong> ${message}</div>`;
+      input.value = '';
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+
+        if (data.response) {
+          messagesDiv.innerHTML += `<div class="message ai"><strong>SmartStudy:</strong> ${data.response}</div>`;
+        } else if (data.error) {
+          messagesDiv.innerHTML += `<div class="message ai"><strong>SmartStudy:</strong> ${data.error}</div>`;
+        } else {
+          messagesDiv.innerHTML += `<div class="message ai"><strong>SmartStudy:</strong> Unknown error.</div>`;
+        }
+      } catch (error) {
+        messagesDiv.innerHTML += `<div class="message ai"><strong>SmartStudy:</strong> ${error.message}</div>`;
+      }
+
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("user-input");
+      const sendBtn = document.getElementById("sendButton");
+
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendBtn.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

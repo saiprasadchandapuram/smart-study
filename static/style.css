@@ -1,0 +1,81 @@
+body.auth-page {
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-card {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+}
+
+.auth-card h2 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.auth-card p {
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.auth-card form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.auth-card button {
+    width: 100%;
+    padding: 10px;
+    background: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.auth-card button:hover {
+    background: #45a049;
+}
+
+.switch-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+body {
+    background-color: #121212;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+input, button {
+    background-color: #1f1f1f;
+    color: white;
+    border: 1px solid #444;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+.ai-response {
+    background-color: #000;  /* or #fff for white text bubble */
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
